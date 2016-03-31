@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Deck.h"
 
+/*This file initialises a decklist containing the standard 52 cards*/
+
 using std::cout;
 using std::endl;
 
