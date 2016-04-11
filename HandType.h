@@ -10,9 +10,5 @@ struct HandType
 
 
 HandType handValue(std::vector<Card*>& hand);
+HandType smallHand(std::vector<Card*>& hand);
 void findBestHand(Hand& hand);
-
-/*
-HandType handValue(std::vector<Card*>& hand);
-void findBestHand(Hand& hand);
-*/

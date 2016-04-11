@@ -32,11 +32,17 @@ bool Hand::setCard(Deck& deck, Card& card)
 		availableCards.push_back(dp);
 		count++;
 
-		if (count > 5)
+		if (count > 5) {
+			availableHands.clear();
 			handOptions();
-		else
+		}
+		else {
 			bestHand.push_back(dp);
 
+			if (count == 5) {
+				availableHands.push_back(bestHand);
+			}
+		}
 		return true;
 	}
 	else {
@@ -45,51 +51,141 @@ bool Hand::setCard(Deck& deck, Card& card)
 	}
 }
 
-void Hand::handOptions() //find all possible unique hand combinations (both hole cards are always included)
+void Hand::options(int hIndex, int index)
 {
-	std::vector<Card*> altHand(5);
-	Card* dp = new Card;
+	cout << "Call to options() " << "hIndex: " << hIndex << ", index: " << index << endl;
 
-	for (int i = 0; i != 5; ++i) {
-		altHand[i] = availableCards[i];
+	if (hIndex == 0)
+	{
+		std::vector<Card*> temp;
+		temp.clear();
+
+		cout << "Push into availableHands these tempHand Cards: " << endl;
+
+		for (int j = 5; j > 0; j--) {
+			cout << tempHand[j]->rank << " " << tempHand[j]->suit << " ";
+			temp.push_back(tempHand[j]);
+			cout << "here" << endl;
+			availableHands.push_back(tempHand);
+			cout << availableHands.size() << endl;
+			cout << availableHands[0][j]->rank << endl;
+			availableHands[availableHands.size()].push_back(tempHand[j]);
+			cout << "or here?" << endl;
+		}
+		cout << endl;
+
+		//availableHands.push_back(temp);
+		
+		cout << "availableHands: " << endl;
+		for (int x = 0; x != availableHands.size(); ++x) { //hands
+			for (int y = 0; y != availableHands[x].size(); ++y) { //cards in hand
+				cout << availableHands[x][y]->rank << " " << availableHands[x][y]->suit << " ";
+			}
+			cout << endl;
+		}
 	}
-
-	if (count == 6) {
-
-		availableHands.push_back(altHand); //1,2,3,4,5
-
-		altHand[4] = availableCards[5];
-		availableHands.push_back(altHand); //1,2,3,4,6
-
-		altHand[2] = availableCards[4];
-		availableHands.push_back(altHand); //1,2,5,4,6
-	}
-	else if (count == 7) {
-
-		altHand[2] = availableCards[4];
-		altHand[3] = availableCards[6];
-		altHand[4] = availableCards[5];
-		availableHands.push_back(altHand); //1,2,5,7,6
-
-		altHand[2] = availableCards[2];
-		availableHands.push_back(altHand); //1,2,3,7,6
-
-		altHand[2] = availableCards[3];
-		availableHands.push_back(altHand); //1,2,4,7,6
-
-		altHand[4] = availableCards[4];
-		availableHands.push_back(altHand); //1,2,4,7,5
-
-		altHand[4] = availableCards[2];
-		availableHands.push_back(altHand); //1,2,4,7,3
-
-		altHand[2] = availableCards[4];
-		availableHands.push_back(altHand); //1,2,5,7,3
-
-		altHand[3] = availableCards[5];
-		availableHands.push_back(altHand); //1,2,5,6,3
+	else {
+		for (int i = index; i < availableCards.size(); i++)
+		{
+			tempHand[hIndex]->rank = availableCards[i]->rank;
+			tempHand[hIndex]->suit = availableCards[i]->suit;
+			options(hIndex - 1, i + 1);
+		}
 	}
 }
+
+void Hand::handOptions() //find all possible unique hand combinations (both hole cards are always included)
+{
+	cout << "Call to handOptions()" << endl;
+
+	for (int i = 0; i != availableCards.size(); ++i) {
+
+		Card* dp = new Card;
+		dp->rank = i + 2;
+		dp->suit = "Hearts";
+
+		tempHand.push_back(dp);
+
+		tempHand[i]->rank = availableCards[i]->rank;
+		tempHand[i]->suit = availableCards[i]->suit;
+
+		cout << "availableCards " << i << " at handOptions(): " << availableCards[i]->rank << ", " << availableCards[i]->suit << endl;
+	}
+
+	options(5, 0);
+}
+
+/*
+void Hand::options( int hIndex, int index)
+{
+	cout << "Call to options()" << endl;
+
+	if (hIndex == 0)
+	{
+		for (int j = 5; j>0; j--)
+			std::cout << tempHand[j].rank << " " << tempHand[j].suit << " ";
+		std::cout << std::endl;
+
+		//availableHands.push_back(bestHand);
+
+		for (int x = 0; x != tempHand.size() - 1; ++x) {
+			//cout << "available hands size: " <<availableHands.size() << endl;
+			//cout << "does it get here? " << x << endl;
+			availableHands[availableHands.size() - 1][x]->rank = tempHand[x].rank;
+			
+			//cout << "and here? " << x << endl;
+			availableHands[availableHands.size() - 1][x]->suit = tempHand[x].suit;
+			//cout << "step complete times: " << x << endl;
+		}
+		
+		for (int i = 0; i != availableCards.size(); ++i) {
+			//cout << "availableCards " << i << " at options() if loop: " << availableCards[i]->rank << ", " << availableCards[i]->suit << endl;
+		}
+	}
+	else 
+		//for (int z = 0; z != tempHand.size(); ++z) {
+		//	cout << "tempHand " << z << " at options() else loop: " << tempHand[z].rank << ", " << tempHand[z].suit << endl;
+		//}
+		for (int i = index; i < availableCards.size(); i++)
+		{
+			for (int j = 0; j != availableCards.size(); ++j) {
+				//cout << "availableCards " << i << " at options() else loop: " << availableCards[i]->rank << ", " << availableCards[i]->suit << endl;
+			}
+			
+			//cout << "check" << endl;
+			//cout << tempHand[i].rank << endl;
+			//cout << "try to set" << endl;
+			tempHand[hIndex].rank = availableCards[i]->rank;
+			tempHand[hIndex].suit = availableCards[i]->suit;
+			//cout << "next options" << endl;
+			options(hIndex - 1, i + 1);
+		}
+}
+
+void Hand::handOptions() //find all possible unique hand combinations (both hole cards are always included)
+{
+	cout << "Call to handOptions()" << endl;
+
+	if (availableHands.size() == 1) {
+		for (int i = 0; i < availableCards.size(); i++)
+		{
+			tempHand.push_back(Card());
+			
+			tempHand[i].rank = availableCards[i]->rank;	
+			tempHand[i].suit = availableCards[i]->suit;
+		}
+	}
+	else {
+		availableHands.clear();	
+	}
+
+	for (int i = 0; i != availableCards.size(); ++i) {
+		cout << "availableCards " << i << " at handOptions(): " << availableCards[i]->rank << ", " << availableCards[i]->suit << endl;
+	}
+
+	options(5, 0);
+}
+*/
 
 void Hand::setHand(std::vector<Card*>& hand)
 {
