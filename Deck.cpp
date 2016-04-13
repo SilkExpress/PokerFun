@@ -6,8 +6,7 @@ using std::endl;
 
 Deck::Deck()
 {
-	for (int i = 0; i != 52; ++i)
-	{
+	for (int i = 0; i != 52; ++i) {
 		decklist.push_back(Card());
 
 		if (i < 13) {
@@ -61,10 +60,8 @@ void Deck::printDeck() const
 void Deck::burnCard(Card& burn)
 {
 	for (std::list<Card*>::iterator iter = deck.begin(); iter != deck.end(); ++iter) {
-		if ((*iter)->rank == burn.rank) 
-		{
-			if ((*iter)->suit == burn.suit)
-			{
+		if ((*iter)->rank == burn.rank) {
+			if ((*iter)->suit == burn.suit) {
 				deck.erase(iter++);
 			}
 		}

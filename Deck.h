@@ -1,8 +1,9 @@
 #pragma once
 #include "stdafx.h"
-//Defines a card
-//Contains the cards available
-//Contains the unknown cards
+//Creates a decklist of all possible cards
+//Creates a deck of cards by pointing to the Cards in deck list
+//Destroys pointer to decklist as card is played (the pointer to card is moved into a new container as it becomes known)
+//Allows printing of the deck and decklist
 
 struct Card
 {

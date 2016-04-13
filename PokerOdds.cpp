@@ -15,7 +15,6 @@ int main()
 {
 	Deck deck;
 	Hand hand;
-	//Odds handOdds;
 
 	//deck.printDecklist();
 	//cout << "Decklist contains: " << deck.sizeDecklist() << " cards" << endl;
@@ -25,82 +24,82 @@ int main()
 	std::string suit;
 	
 	for (int i = 0; i != 2; ++i) {
-		//cout << "Enter hole card " << i + 1 << " in format rank suit: ";
-		//cin >> rank >> suit; //fix scenario where rank rank suit
+		cout << "Enter hole card " << i + 1 << " in format rank suit: ";
+		cin >> rank >> suit; //fix scenario where rank rank suit
 
-		rank = i + 3;
-		suit = "Hearts";
+		//rank = i + 3;
+		//suit = "Hearts";
 
 		burn.rank = rank;
 		burn.suit = suit;
 
-		bool cardSet = hand.setCard(deck, burn);
+		cout << "Card " << i << " is: " << rank << " " << suit << endl;
 
-		cout << "Card " << i << " is: " << rank << ", " << suit << endl;
+		bool cardSet = hand.setCard(deck, burn);
 
 		if (cardSet)
 			continue;
-		else
+		else //try again
 			i--;
 	}
-	
+	///*
 	for (int i = 0; i != 3; ++i) {
-		//cout << "Enter flop card " << i + 1 << " in format rank suit: ";
-		//cin >> rank >> suit;
+		cout << "Enter flop card " << i + 1 << " in format rank suit: ";
+		cin >> rank >> suit;
 
-		rank = i + 6;
-		suit = "Spades";
+		//rank = i + 5;
+		//suit = "Spades";
 
 		burn.rank = rank;
 		burn.suit = suit;
 
-		bool cardSet = hand.setCard(deck, burn);
+		cout << "Card " << i + 2 << " is: " << rank << " " << suit << endl;
 
-		cout << "Card " << i + 2 << " is: " << rank << ", " << suit << endl;
+		bool cardSet = hand.setCard(deck, burn);
 
 		if (cardSet)
 			continue;
-		else
+		else //try again
 			i--;
 	}
 	///*
 	for (int i = 0; i != 1; ++i) {
-		//cout << "Enter turn card in format rank suit: ";
-		//cin >> rank >> suit;
+		cout << "Enter turn card 1 in format rank suit: ";
+		cin >> rank >> suit;
 
-		rank = i + 10;
-		suit = "Clubs";
+		//rank = i + 10;
+		//suit = "Clubs";
 
 		burn.rank = rank;
 		burn.suit = suit;
 
-		bool cardSet = hand.setCard(deck, burn);
+		cout << "Card " << i + 5 << " is: " << rank << " " << suit << endl;
 
-		cout << "Card " << i + 5 << " is: " << rank << ", " << suit << endl;
+		bool cardSet = hand.setCard(deck, burn);
 
 		if (cardSet)
 			continue;
-		else
+		else //try again
 			i--;
 	}
 	/*
 	for (int i = 0; i != 1; ++i) {
-		//cout << "Enter river card in format rank suit: ";
-		//cin >> rank >> suit;
+		cout << "Enter river card 1 in format rank suit: ";
+		cin >> rank >> suit;
 
-		rank = i + 12;
-		suit = "Clubs";
+		//rank = i + 12;
+		//suit = "Clubs";
 
 		burn.rank = rank;
 		burn.suit = suit;
 
-		bool cardSet = hand.setCard(deck, burn);
+		cout << "Card " << i + 5 << " is: " << rank << " " << suit << endl;
 
-		cout << "Card " << i + 5 << " is: " << rank << ", " << suit << endl;
+		bool cardSet = hand.setCard(deck, burn);	
 
 		if (cardSet)
 			continue;
-		else
+		else //try again
 			i--;
 	}
 	*/
@@ -114,8 +113,8 @@ int main()
 	hand.printCommunity();
 	cout << "Available cards: " << endl;
 	hand.printAvailable();
-	cout << "Hands available: " << endl;
-	hand.printHands();
+	//cout << "Hands available: " << endl;
+	//hand.printHands();
 
 	findBestHand(hand);
 
