@@ -31,8 +31,9 @@ HandType handValue(std::vector<Card*>& hand)
 	std::sort(hand.begin(), hand.end(), compareCard);
 
 	for (int i = 0; i != hand.size(); ++i) {
-		cout << "Hand[" << i << "] Contents: " << hand[i]->rank << " " << hand[i]->suit << endl;
+		cout << hand[i]->rank << " " << hand[i]->suit << "  ";
 	}
+	cout << endl;
 
 	for (int i = 0; i != hand.size() - 1; ++i) {
 		if (hand[i]->suit == hand[i + 1]->suit) {
@@ -136,7 +137,7 @@ HandType handValue(std::vector<Card*>& hand)
 		hValue.name = "Straight";
 		hValue.value = 5;
 		hValue.highCard = hand[4]->rank;
-		cout << hValue.name << " (" << hValue.value << "): " << hValue.highCard << endl;
+		cout << hValue.name << " (" << hValue.value << "): " << hValue.highCard << " high" << endl;
 	}
 	else if (has3OfKind) {
 		hValue.name = "Three of a kind";
@@ -373,17 +374,17 @@ void findBestHand(Hand& hand)
 			cout << "Best hand type: " << bestH.name << endl;
 		}
 		else {
-			cout << "Hand " << i + 1 << ":" << endl;
+			cout << endl << "Hand " << i + 1 << ":" << endl;
 			handT = handValue(hands[i]); //check hand option type
 
-			cout << "Check hand: " << i + 1 << " with type: " << handT.name << ", against best: " << bestH.name << endl;
+			cout << "Check hand " << i + 1 << " (" << handT.name << ") against best: " << bestH.name << endl;
 
 			if (handT.value > bestH.value) {
 				cout << "Current best hand:" << endl;
 				bestH = handValue(bHand); //current best hand type
 
 				hand.setHand(hands[i]); //Set the best hand to equal the new best
-				cout << "New best hand set, hand option: " << i + 1 << ", with type: " << handT.name << endl;
+				cout << "Hand option " << i + 1 << " set as new best hand, with type: " << handT.name << endl;
 
 				cout << "Best hand:" << endl;
 				bestH = handValue(bHand); //new best hand type
@@ -394,7 +395,7 @@ void findBestHand(Hand& hand)
 					bestH = handValue(bHand); //current best hand type
 
 					hand.setHand(hands[i]); //Set the best hand to equal the new best
-					cout << "New best hand set, hand option: " << i + 1 << ", with type: " << handT.name << endl;
+					cout << "Hand option " << i + 1 << " set as new best hand, with type: " << handT.name << endl;
 
 					cout << "Best hand:" << endl;
 					bestH = handValue(bHand); //new best hand type

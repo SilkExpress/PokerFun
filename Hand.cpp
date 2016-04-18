@@ -28,16 +28,15 @@ bool Hand::setCard(Deck& deck, Card& card)
 		deck.burnCard(card); //card is moved from the deck, delete the pointer
 
 		availableCards.push_back(dp); //add card to the container of available cards
-		count++;
 
-		if (count > 5) {
+		if (availableCards.size() > 5) {
 			availableHands.clear();
 			handOptions(); //find the available hand options
 		}
 		else {
 			bestHand.push_back(dp);
 
-			if (count == 5) {
+			if (availableCards.size() == 5) {
 				availableHands.push_back(bestHand);
 			}
 		}
@@ -55,9 +54,9 @@ void Hand::findUnique(int tIndex, int index)
 	if (tIndex == 0) {
 		std::vector<Card*> temp;
 
-		cout << endl << "Push these tempHand cards into availableHands: " << endl;
+		//cout << endl << "Push these tempHand cards into availableHands: " << endl;
 		for (int j = 5; j > 0; j--) {
-			cout << tempHand[j]->rank << " " << tempHand[j]->suit << " ";
+			//cout << tempHand[j]->rank << " " << tempHand[j]->suit << " ";
 
 			Card* dp = new Card;
 			dp->rank = tempHand[j]->rank;
@@ -65,17 +64,17 @@ void Hand::findUnique(int tIndex, int index)
 
 			temp.push_back(dp);
 		}
-		cout << endl;
+		//cout << endl;
 
 		availableHands.push_back(temp);
 		
-		cout << endl << "availableHands: " << endl;
-		for (int x = 0; x != availableHands.size(); ++x) { //hands
-			for (int y = 0; y != availableHands[x].size(); ++y) { //cards in hand
-				cout << availableHands[x][y]->rank << " " << availableHands[x][y]->suit << " ";
-			}
-			cout << endl;
-		}
+		//cout << endl << "availableHands: " << endl;
+		//for (int x = 0; x != availableHands.size(); ++x) { //hands
+		//	for (int y = 0; y != availableHands[x].size(); ++y) { //cards in hand
+		//		cout << availableHands[x][y]->rank << " " << availableHands[x][y]->suit << " ";
+		//	}
+		//	cout << endl;
+		//}
 	}
 	else {
 		for (int i = index; i < availableCards.size(); i++) {
@@ -98,7 +97,7 @@ void Hand::handOptions() //find all possible unique hand combinations (both hole
 		tempHand[i]->rank = availableCards[i]->rank;
 		tempHand[i]->suit = availableCards[i]->suit;
 
-		cout << "availableCards " << i << " at handOptions(): " << availableCards[i]->rank << ", " << availableCards[i]->suit << endl;
+		//cout << "availableCards " << i << " at handOptions(): " << availableCards[i]->rank << ", " << availableCards[i]->suit << endl;
 	}
 
 	findUnique(5, 0);
@@ -121,8 +120,8 @@ void Hand::printAvailable() const
 
 void Hand::printHole() const
 {
-	int end = count;
-	if (count > 2)
+	int end = availableCards.size();
+	if (availableCards.size() > 2)
 		end = 2;
 
 	for (int i = 0; i != end; ++i) {
@@ -134,9 +133,9 @@ void Hand::printCommunity() const
 {
 	int end = 0;
 	int start = 0;
-	if (count > 2) {
+	if (availableCards.size() > 2) {
 		start = 2;
-		end = count;
+		end = availableCards.size();
 	}
 	else
 		cout << "There are no community cards" << endl;
@@ -155,14 +154,16 @@ void Hand::printHands() const
 	for (int i = 0; i != availableHands.size(); ++i) {
 		cout << "Hand option: " << i + 1 << endl;
 		for (int j = 0; j != availableHands[i].size(); ++j) {
-			cout << availableHands[i][j]->rank << " " << availableHands[i][j]->suit << endl;
+			cout << availableHands[i][j]->rank << " " << availableHands[i][j]->suit << "  ";
 		}
+		cout << endl;
 	}
 }
 
 void Hand::printBest() const
 {
 	for (std::vector<Card*>::const_iterator iter = bestHand.begin(); iter != bestHand.end(); ++iter) {
-		cout << (*iter)->rank << " " << (*iter)->suit << endl;
+		cout << (*iter)->rank << " " << (*iter)->suit << "  ";
 	}
+	cout << endl;
 }

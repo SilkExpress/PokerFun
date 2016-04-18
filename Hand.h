@@ -12,7 +12,6 @@ private:
 	std::vector<std::vector<Card*>> availableHands; //available hand options
 	std::vector<Card*> tempHand; //temporary container for finding the available hand options
 	std::vector<Card*> bestHand; //the best hand option
-	int count; //count of known cards e.g. hole, flop, turn and river cards (up to 7 count)
 public:
 	bool setCard(Deck& deck, Card& card); //card is played (enter into the availableCards)
 	void handOptions(); //find the available hands (up to 5 cards) using cards from hole and community
@@ -23,6 +22,7 @@ public:
 	void printCommunity() const; //print community cards	
 	void printHands() const; //print the available hand options
 	void printBest() const; //print the best hand	
+	int knownCount() { return availableCards.size(); }
 	std::vector<std::vector<Card*>>& availableOptions() { return availableHands; } //return the available hand options
 	std::vector<Card*>& bestOption() { return bestHand; } //return the current best hand option
 };
